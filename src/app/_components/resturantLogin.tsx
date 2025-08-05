@@ -1,15 +1,45 @@
 'use client';
 
+import { ApiResult } from '@/utils/api-common';
+import featuredFetch from '@/utils/featured-fetch';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation'; 
 
 const RestaurantLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter(); // Next.js router
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log({ email, password });
-    // 🔐 Send login request here
+  
+    try {
+      const response = await featuredFetch<ApiResult<any>>({
+        input: "user/login",
+        init: {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({  email, password }),
+        },
+      });
+      if (!response.token) {
+        alert('Login failed. No token received.');
+        return;
+      }
+
+      // ✅ Store token in localStorage
+      localStorage.setItem("CMS_TOKEN", response.token);
+
+      // ✅ Redirect to home page
+      router.push('/');
+
+
+    } catch (error) {
+      console.error('Login error:', error);
+      alert('Something went wrong. Please try again later.');
+    }
   };
 
   return (

@@ -1,0 +1,4 @@
+export const CMS_TOKEN = 'CMS_TOKEN';
+export const CMS_TEMP_TOKEN = 'CMS_TEMP_TOKEN';
+export const CMS_USERINFO = 'CMS_USERINFO';
+export const CMS_TOKEN_EXPIRATION = 'CMS_TOKEN_EXPIRATION';
