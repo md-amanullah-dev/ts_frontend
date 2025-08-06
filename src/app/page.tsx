@@ -53,7 +53,7 @@ export default function Home() {
               Start Ordering
             </a>
             <a
-              href="/restaurant"
+              href="/user"
               className="px-6 py-3 bg-white text-orange-600 border border-orange-400 rounded-full font-semibold hover:bg-orange-100 transition"
             >
               Partner as Restaurant
