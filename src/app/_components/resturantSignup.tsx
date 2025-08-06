@@ -1,8 +1,16 @@
 'use client';
 
+import { ApiResult } from '@/utils/api-common';
+import featuredFetch from '@/utils/featured-fetch';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation'; 
 
-const RestaurantSignUp = () => {
+interface RestaurantSignUpProps {
+  onSuccess: () => void; // used to switch to login view
+}
+
+const RestaurantSignUp = ({ onSuccess }: RestaurantSignUpProps) => {
+    const router = useRouter();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -17,18 +25,81 @@ const RestaurantSignUp = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+// const handleSubmit = async (e: React.FormEvent) => {
+//     e.preventDefault();
 
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords don't match");
-      return;
-    }
+//     if (formData.password !== formData.confirmPassword) {
+//       alert("Passwords don't match");
+//       return;
+//     }
 
-    console.log('Form submitted:', formData);
-    // 🔐 Send data to backend
-  };
+//     try {
+//       const response = await featuredFetch<ApiResult<any>>({
+//         input: 'user/signup',
+//         init: {
+//           method: 'POST',
+//           headers: {
+//             'Content-Type': 'application/json',
+//           },
+//           body: JSON.stringify({
+//             email: formData.email,
+//             password: formData.password,
+//             restaurantName: formData.restaurantName,
+//             city: formData.city,
+//             address: formData.address,
+//             contactNumber: formData.contactNumber,
+//           }),
+//         },
+//         tokenValidation: false,
+//       });
 
+//       console.log('Signup success:', response);
+//       alert('Signup successful! Redirecting to login...');
+//       router.push('/resturant'); // ✅ Redirect to login page
+//     } catch (error) {
+//       console.error('Signup error:', error);
+//       alert(error || 'Signup failed');
+//     }
+//   };
+
+
+
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  if (formData.password !== formData.confirmPassword) {
+    alert("Passwords don't match");
+    return;
+  }
+
+  try {
+    const response = await featuredFetch<ApiResult<any>>({
+      input: 'user/signup',
+      init: {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+          restaurantName: formData.restaurantName,
+          city: formData.city,
+          address: formData.address,
+          contactNumber: formData.contactNumber,
+        }),
+      },
+      tokenValidation: false,
+    });
+
+    console.log('Signup success:', response);
+    alert('Signup successful! Redirecting to login...');
+    onSuccess(); // ✅ Switch to login form
+  } catch (error) {
+    console.error('Signup error:', error);
+    alert(error || 'Signup failed');
+  }
+};
   return (
     <div>
       <form onSubmit={handleSubmit} className="space-y-4">

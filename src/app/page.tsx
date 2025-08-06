@@ -2,6 +2,8 @@
 'use client';
 
 import { useEffect, useState } from "react";
+import RestaurantFooter from "./_components/resturantFooter";
+import ResturantHeader from "./_components/resturantHeader";
 
 export default function Home() {
 
@@ -28,6 +30,8 @@ export default function Home() {
   }, []);
 
   return (
+    <>
+          <ResturantHeader/>
     <main className="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-100 to-orange-200 flex items-center justify-center px-6 py-12">
       <div className="w-full max-w-6xl mx-auto grid md:grid-cols-2 items-center gap-10">
 
@@ -71,6 +75,9 @@ export default function Home() {
         </div>
       </div>
     </main>
+      <RestaurantFooter/>
+      </>
+
   );
 }
 
