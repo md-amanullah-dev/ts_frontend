@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation'; 
 
 interface RestaurantSignUpProps {
-  onSuccess: () => void; // used to switch to login view
+  onSuccess: () => void;
 }
 
 const RestaurantSignUp = ({ onSuccess }: RestaurantSignUpProps) => {
@@ -24,45 +24,6 @@ const RestaurantSignUp = ({ onSuccess }: RestaurantSignUpProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-// const handleSubmit = async (e: React.FormEvent) => {
-//     e.preventDefault();
-
-//     if (formData.password !== formData.confirmPassword) {
-//       alert("Passwords don't match");
-//       return;
-//     }
-
-//     try {
-//       const response = await featuredFetch<ApiResult<any>>({
-//         input: 'user/signup',
-//         init: {
-//           method: 'POST',
-//           headers: {
-//             'Content-Type': 'application/json',
-//           },
-//           body: JSON.stringify({
-//             email: formData.email,
-//             password: formData.password,
-//             restaurantName: formData.restaurantName,
-//             city: formData.city,
-//             address: formData.address,
-//             contactNumber: formData.contactNumber,
-//           }),
-//         },
-//         tokenValidation: false,
-//       });
-
-//       console.log('Signup success:', response);
-//       alert('Signup successful! Redirecting to login...');
-//       router.push('/resturant'); // ✅ Redirect to login page
-//     } catch (error) {
-//       console.error('Signup error:', error);
-//       alert(error || 'Signup failed');
-//     }
-//   };
-
-
 
 const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
@@ -93,8 +54,8 @@ const handleSubmit = async (e: React.FormEvent) => {
     });
 
     console.log('Signup success:', response);
-    alert('Signup successful! Redirecting to login...');
-    onSuccess(); // ✅ Switch to login form
+    router.push('/');
+    // onSuccess(); // ✅ Switch to login form
   } catch (error) {
     console.error('Signup error:', error);
     alert(error || 'Signup failed');
